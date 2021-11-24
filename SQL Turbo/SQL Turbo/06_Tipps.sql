@@ -17,3 +17,12 @@ where left(customerid,2) = 'MA'
 --Klammern setzen in where mit AND und OR
 -- zuerst gedanklich visualieren, dann schreiben
 
+
+--filtere nie etwas mit Having was ein where machen kann
+--das having hat immer nur AGG zu filtern
+
+
+
+w3schools.com
+
+--SQLEXPRESS bis 10GB DB Größe

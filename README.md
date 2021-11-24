@@ -7,22 +7,21 @@
 
 # WHERE
 * Vergleichsoperatoren 
-* like
+* like 
+* between in
 
 # JOIN
 * Abfragen über mehrere Tabellen
-
+* LEFT RIGHT INNER JOIN
 
 # GROUP BY
 * AGG
-* Filter auf AGG
+* Filter auf AGG mit having
 
-# Views
 
 # temp Tabellen
 
---A B C Analyse
-
-# Verknüpfung in andere Tools
-* Views
+# Hinweise
+* top 1 , n
+* distinct
 

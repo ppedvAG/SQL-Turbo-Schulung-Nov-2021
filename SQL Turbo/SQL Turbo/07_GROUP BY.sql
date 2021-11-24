@@ -55,5 +55,93 @@ order by Umsatz desc, Land, Stadt
 
 --Ausgabe: Firma, RngSumme, Bestelldatum, Land-- ist ne fiese Nummer ;-)
 
+select c.companyname, c.country, year(o.orderdate), sum(unitprice*quantity)
+from 
+	customers c inner join orders o on c.CustomerID=o.CustomerID
+				inner join [Order Details] od on od.OrderID=o.OrderID
+where
+		year(orderdate) = 1997 and c.country = 'Germany'
+group by c.companyname, c.country, year(o.orderdate)
+
+--Idee Ergbnis wegschreiben
+select c.companyname, o.orderid,sum(unitprice*quantity)
+from 
+	customers c inner join orders o on c.CustomerID=o.CustomerID
+				inner join [Order Details] od on od.OrderID=o.OrderID
+where
+		year(orderdate) = 1997 and c.country = 'Germany'
+group by c.companyname,o.orderid
+
+
+--temporäre Tabelle
+select c.companyname, o.orderid,sum(unitprice*quantity) as RngSumme
+into #t
+from 
+	customers c inner join orders o on c.CustomerID=o.CustomerID
+				inner join [Order Details] od on od.OrderID=o.OrderID
+where
+		year(orderdate) = 1997 and c.country = 'Germany'
+group by c.companyname,o.orderid
+
+
+select CompanyName, RngSumme from #t
+
+select * from #t
+
+drop table #t
+
+
+select sum(rngsumme) from #t
+
+
+---ABC Analyse
+
+
+--Kunde haben Frachtkosten
+
+--bei Summe der Frachtkosten unter 100 = A Kunden
+--bei Summe der Frachtkosten über 500 = C Kunden
+--die dazwischen sind B Kunden
+
+
+--Kunde, SummeFrachtgkosten A B oder c
+
+
+--Jetzt mal auf A Kunde reduzieren
+select companyname, sum(freight) as Frachtsumme, 'A'
+	from customers c inner join orders o on c.CustomerID=o.CustomerID
+group by CompanyName having sum(freight) < 100
+
+select companyname, sum(freight) as Frachtsumme, 'C'
+	from customers c inner join orders o on c.CustomerID=o.CustomerID
+group by CompanyName having sum(freight) >500
+
+select companyname, sum(freight) as Frachtsumme, 'B'
+	from customers c inner join orders o on c.CustomerID=o.CustomerID
+group by CompanyName having sum(freight) between 100 and 500
+
+--Jetrzt Ergebnisse zusammenbringen
+select companyname, sum(freight) as Frachtsumme, 'A' as Typ --muss einen Namen habe
+	into #t1
+	from customers c inner join orders o on c.CustomerID=o.CustomerID
+group by CompanyName having sum(freight) < 100
+
+insert into #t1
+select companyname, sum(freight) as Frachtsumme, 'C'
+	from customers c inner join orders o on c.CustomerID=o.CustomerID
+group by CompanyName having sum(freight) >500
+
+
+insert into #t1
+select companyname, sum(freight) as Frachtsumme, 'B'
+	from customers c inner join orders o on c.CustomerID=o.CustomerID
+group by CompanyName having sum(freight) between 100 and 500
+
+
+
+select * from #t1
+
+
+
 
 
