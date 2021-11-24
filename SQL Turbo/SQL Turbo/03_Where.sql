@@ -267,7 +267,32 @@ select * from orders o
 order by 3,8
 
 
+--BETWEEN
+select * from orders	
+		where freight between 10 and 100
 
+
+	--besser als
+select * from orders
+	where freight >= 10 and freight <= 100
+
+
+--IN
+select * from customers
+	where 
+		country = 'USA'
+		or
+		country = 'UK'
+		or
+		country = 'Germany'
+
+
+--besser so ;-)
+
+select * from customers where country in ('USA','UK','Germany')
+
+
+--bei Between und IN keine Wildcards???  !!!! weil IN und Between mit = bzw >= arbeitet
 
 
 

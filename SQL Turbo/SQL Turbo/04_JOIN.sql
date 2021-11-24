@@ -82,6 +82,52 @@ select c.CustomerID, c.CompanyName,
 from orders o  right join customers c on c.CustomerID=o.CustomerID
 where o.orderid is NULL --nicht = NULL 
 
+
+--noch mehr Tabellen
+
+
+select * 
+	from 
+	TAB1 A inner join TAB2 B on A.sp = B.SP
+		   inner join TAB3 C on c.sp = B.sp
+		   inner join TAB4 D on D.sp = F.Sp
+	where 
+	order by 
+
+
+--Liste aller Kunden (Firmenname) und deren gekauften Produkte (Produktname)
+
+--Customers--> orders-->order details ---> products
+select	
+		c.CompanyName, p.ProductName
+from  customers c inner join orders o on c.customerid = o.CustomerID
+			      inner join [Order Details] od on od.OrderID=o.OrderID
+				  inner join Products p on p.ProductID=od.ProductID
+order by CompanyName, ProductName
+
+
+--Brauche aber nur ein simple Liste  mit Kunde und deren Produkte
+--doppelte Zeilen raus
+
+select	distinct--filter doppelte Ergebniszeilen
+		c.CompanyName, p.ProductName
+from  customers c inner join orders o on c.customerid = o.CustomerID
+			      inner join [Order Details] od on od.OrderID=o.OrderID
+				  inner join Products p on p.ProductID=od.ProductID
+order by CompanyName, ProductName
+
+
+select	distinct--filter doppelte Ergebniszeilen
+		c.CompanyName, p.ProductName
+from  customers c inner join orders o on c.customerid = o.CustomerID
+			      inner join [Order Details] od on od.OrderID=o.OrderID
+				  inner join Products p on p.ProductID=od.ProductID
+where freight between 10 and 20 --between Grenzen sind inklusive  freight >= 10 and freight <= 20
+order by CompanyName, ProductName
+
+
+
+
  
 
 
